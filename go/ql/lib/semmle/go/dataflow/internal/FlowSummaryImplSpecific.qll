@@ -23,10 +23,10 @@ DataFlowCallable inject(SummarizedCallable c) { result.asCallable() = c }
 ArgumentPosition instanceParameterPosition() { result = -1 }
 
 /** Gets the textual representation of a parameter position in the format used for flow summaries. */
-string getParameterPositionCsv(ParameterPosition pos) { result = pos.toString() }
+string getParameterPosition(ParameterPosition pos) { result = pos.toString() }
 
 /** Gets the textual representation of an argument position in the format used for flow summaries. */
-string getArgumentPositionCsv(ArgumentPosition pos) { result = pos.toString() }
+string getArgumentPosition(ArgumentPosition pos) { result = pos.toString() }
 
 Node summaryNode(SummarizedCallable c, SummaryNodeState state) { result = getSummaryNode(c, state) }
 
@@ -65,11 +65,9 @@ DataFlowType getSyntheticGlobalType(SummaryComponent::SyntheticGlobal sg) { any(
 predicate summaryElement(
   SummarizedCallableBase c, string input, string output, string kind, string provenance
 ) {
-  exists(
-    string namespace, string type, boolean subtypes, string name, string signature, string ext
-  |
-    summaryModel(namespace, type, subtypes, name, signature, ext, input, output, kind, provenance) and
-    c.asFunction() = interpretElement(namespace, type, subtypes, name, signature, ext).asEntity()
+  exists(string package, string type, boolean subtypes, string name, string signature, string ext |
+    summaryModel(package, type, subtypes, name, signature, ext, input, output, kind, provenance) and
+    c.asFunction() = interpretElement(package, type, subtypes, name, signature, ext).asEntity()
   )
 }
 
@@ -89,7 +87,7 @@ SummaryComponent interpretComponentSpecific(string c) {
 }
 
 /** Gets the summary component for specification component `c`, if any. */
-private string getContentSpecificCsv(Content c) {
+private string getContentSpecific(Content c) {
   exists(Field f, string package, string className, string fieldName |
     f = c.(FieldContent).getField() and
     f.hasQualifiedName(package, className, fieldName) and
@@ -110,8 +108,8 @@ private string getContentSpecificCsv(Content c) {
 }
 
 /** Gets the textual representation of the content in the format used for flow summaries. */
-string getComponentSpecificCsv(SummaryComponent sc) {
-  exists(Content c | sc = TContentSummaryComponent(c) and result = getContentSpecificCsv(c))
+string getComponentSpecific(SummaryComponent sc) {
+  exists(Content c | sc = TContentSummaryComponent(c) and result = getContentSpecific(c))
   or
   exists(ReturnKind rk, int n | n = rk.getIndex() |
     sc = TReturnSummaryComponent(rk) and
@@ -154,11 +152,9 @@ class SourceOrSinkElement extends TSourceOrSinkElement {
  * `output`, kind `kind`, and provenance `provenance`.
  */
 predicate sourceElement(SourceOrSinkElement e, string output, string kind, string provenance) {
-  exists(
-    string namespace, string type, boolean subtypes, string name, string signature, string ext
-  |
-    sourceModel(namespace, type, subtypes, name, signature, ext, output, kind, provenance) and
-    e = interpretElement(namespace, type, subtypes, name, signature, ext)
+  exists(string package, string type, boolean subtypes, string name, string signature, string ext |
+    sourceModel(package, type, subtypes, name, signature, ext, output, kind, provenance) and
+    e = interpretElement(package, type, subtypes, name, signature, ext)
   )
 }
 
@@ -167,11 +163,9 @@ predicate sourceElement(SourceOrSinkElement e, string output, string kind, strin
  * `input`, kind `kind` and provenance `provenance`.
  */
 predicate sinkElement(SourceOrSinkElement e, string input, string kind, string provenance) {
-  exists(
-    string namespace, string type, boolean subtypes, string name, string signature, string ext
-  |
-    sinkModel(namespace, type, subtypes, name, signature, ext, input, kind, provenance) and
-    e = interpretElement(namespace, type, subtypes, name, signature, ext)
+  exists(string package, string type, boolean subtypes, string name, string signature, string ext |
+    sinkModel(package, type, subtypes, name, signature, ext, input, kind, provenance) and
+    e = interpretElement(package, type, subtypes, name, signature, ext)
   )
 }
 
