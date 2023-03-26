@@ -10,7 +10,7 @@ on:
 
 jobs:
   compile-queries:
-    runs-on: ubuntu-latest-xl
+    runs-on: ubuntu-lates
 
     steps:
       - uses: actions/checkout@v3
@@ -26,7 +26,8 @@ jobs:
       - name: check formatting
         run: find */ql -type f \( -name "*.qll" -o -name "*.ql" \) -print0 | xargs -0 -n 3000 -P 10 codeql query format -q --check-only
       - name: compile queries - check-only
-        # run with --check-only if running in a PR (github.sha != main)
+        #run: --check-only 
+        # if running in a PR (github.sha != main)
         if : ${{ github.event_name == 'pull_request' }}
         shell: bash
         run: codeql query compile -q -j0 */ql/{src,examples} --keep-going --warnings=error --check-only --compilation-cache "${{ steps.query-cache.outputs.cache-dir }}"
