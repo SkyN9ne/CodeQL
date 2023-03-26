@@ -1,3 +1,29 @@
+## 0.5.5
+
+### New Queries
+
+* Added a new query, `java/android/arbitrary-apk-installation`, to detect installation of APKs from untrusted sources.
+
+## 0.5.4
+
+No user-facing changes.
+
+## 0.5.3
+
+### New Queries
+
+* Added a new query, `java/xxe-local`, which is a version of the XXE query that uses local sources (for example, reads from a local file).
+
+### Minor Analysis Improvements
+
+* The `java/index-out-of-bounds` query has improved its handling of arrays of constant length, and may report additional results in those cases.
+
+## 0.5.2
+
+### New Queries
+
+* Added a new query, `java/android/sensitive-result-receiver`, to find instances of sensitive data being leaked to an untrusted `ResultReceiver`.
+
 ## 0.5.1
 
 ### New Queries

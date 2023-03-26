@@ -1,3 +1,30 @@
+## 0.5.5
+
+### New Queries
+
+* Added a new query, `rb/zip-slip`, to detect arbitrary file writes during extraction of zip/tar archives.
+
+## 0.5.4
+
+No user-facing changes.
+
+## 0.5.3
+
+### New Queries
+
+* Added a new query, `rb/regex/badly-anchored-regexp`, to detect regular expression validators that use `^` and `$` 
+  as anchors and therefore might match only a single line of a multi-line string.
+
+### Minor Analysis Improvements
+
+* The `rb/polynomial-redos` query now considers the entrypoints of the API of a gem as sources.
+
+## 0.5.2
+
+### New Queries
+
+* Added a new query, `rb/html-constructed-from-input`, to detect libraries that unsafely construct HTML from their inputs.
+
 ## 0.5.1
 
 ### New Queries

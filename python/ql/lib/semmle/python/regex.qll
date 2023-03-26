@@ -85,6 +85,17 @@ predicate used_as_regex(Expr s, string mode) {
   )
 }
 
+private import semmle.python.Concepts
+private import semmle.python.RegexTreeView
+
+/** Gets a parsed regular expression term that is executed at `exec`. */
+RegExpTerm getTermForExecution(RegexExecution exec) {
+  exists(RegexTracking t, DataFlow::Node source | t.hasFlow(source, exec.getRegex()) |
+    result.getRegex() = source.asExpr() and
+    result.isRootTerm()
+  )
+}
+
 /**
  * Gets the canonical name for the API graph node corresponding to the `re` flag `flag`. For flags
  * that have multiple names, we pick the long-form name as a canonical representative.
@@ -129,7 +140,11 @@ string mode_from_node(DataFlow::Node node) { node = re_flag_tracker(result) }
 
 /** A StrConst used as a regular expression */
 abstract class RegexString extends Expr {
-  RegexString() { (this instanceof Bytes or this instanceof Unicode) }
+  RegexString() {
+    (this instanceof Bytes or this instanceof Unicode) and
+    // is part of the user code
+    exists(this.getLocation().getFile().getRelativePath())
+  }
 
   /**
    * Helper predicate for `char_set_start(int start, int end)`.

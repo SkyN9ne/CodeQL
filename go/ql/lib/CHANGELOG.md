@@ -1,3 +1,36 @@
+## 0.4.5
+
+### New Features
+
+* Added support for merging two `PathGraph`s via disjoint union to allow results from multiple data flow computations in a single `path-problem` query.
+
+### Major Analysis Improvements
+
+* The main data flow and taint tracking APIs have been changed. The old APIs
+  remain in place for now and translate to the new through a
+  backwards-compatible wrapper. If multiple configurations are in scope
+  simultaneously, then this may affect results slightly. The new API is quite
+  similar to the old, but makes use of a configuration module instead of a
+  configuration class.
+
+## 0.4.4
+
+No user-facing changes.
+
+## 0.4.3
+
+### New Features
+
+* Go 1.20 is now supported. The extractor now functions as expected when Go 1.20 is installed; the definition of `implementsComparable` has been updated according to Go 1.20's new, more-liberal rules; and taint flow models have been added for relevant, new standard-library functions.
+
+### Minor Analysis Improvements
+
+* Support for the Twirp framework has been added.
+
+## 0.4.2
+
+No user-facing changes.
+
 ## 0.4.1
 
 No user-facing changes.

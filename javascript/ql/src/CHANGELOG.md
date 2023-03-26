@@ -1,3 +1,25 @@
+## 0.5.5
+
+### Minor Analysis Improvements
+
+* The following queries now recognize HTML sanitizers as propagating taint: `js/sql-injection`,
+  `js/path-injection`, `js/server-side-unvalidated-url-redirection`, `js/client-side-unvalidated-url-redirection`,
+  and `js/request-forgery`.
+
+## 0.5.4
+
+### Minor Analysis Improvements
+
+* The `js/regex-injection` query now recognizes environment variables and command-line arguments as sources.
+
+## 0.5.3
+
+No user-facing changes.
+
+## 0.5.2
+
+No user-facing changes.
+
 ## 0.5.1
 
 No user-facing changes.
