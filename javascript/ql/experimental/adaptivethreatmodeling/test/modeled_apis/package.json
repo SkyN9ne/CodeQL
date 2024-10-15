@@ -3,7 +3,7 @@
   "description": "",
   "version": "0.0.0",
   "dependencies": {
-    "mongodb": "2.2.33"
+    "mongodb": "3.1.13"
   },
   "devDependencies": {}
 }
